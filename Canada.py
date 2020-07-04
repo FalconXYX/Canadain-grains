@@ -4,6 +4,7 @@ import requests
 import re
 import matplotlib.pyplot as plt
 from selenium import webdriver
+import threading, time
 Barley = []
 Canola = []
 Corn = []
@@ -36,7 +37,8 @@ def getgrains(row, vari, labeler):
     #plt.plot(xaxis, vari, label = labeler)
     print(vari)
 for  x in range(2,11):
-    getgrains(x, types2[x-2], types[x-2])
+    threadObj = threading.Thread(target=getgrains(x, types2[x-2], types[x-2]))
+    threadObj.start()
     plt.plot(xaxis, types2[x-2], label = types[x-2])
 
 driver.close()
